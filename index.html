@@ -4,7 +4,7 @@
 	<title>وقت الصلاة</title>
 </head>
  <body>
-	<h1>أ,قات الصلاة</h1>
+	<h1>أوقات الصلاة</h1>
 	<p id="location"></p>
 	
 	<p id="description"></p> 
@@ -12,17 +12,13 @@
   <div id="prayer-times"></div>
   
 	<script>
-		 const locationPara = document.getElementById("location");
-		// const temperaturePara = document.getElementById("temperature");
-		 const descriptionPara = document.getElementById("description");
+		
 
 		// check if geolocation is supported
 		if (navigator.geolocation) {
 			// watch the user's position and update the locationPara element
 			const watchId = navigator.geolocation.watchPosition(position => {
-				const latitude = position.coords.latitude;
-				const longitude = position.coords.longitude;
-				locationPara.innerText = `Your location: ${latitude}, ${longitude}`;
+				
 
                 const method = 4; // Use Umm Al-Qura method for calculation
 				// make a request to OpenWeatherMap API to get weather data for the current location
@@ -77,7 +73,7 @@
       .catch(error => console.log(error));
 			});
 		} else {
-			locationPara.innerText = "Geolocation is not supported by this browser.";
+			console.log(your browser.§);
 		}
 	</script>
 </body>
