@@ -8,9 +8,9 @@
 	<p id="location"></p>
 	<p id="temperature"></p>
 	<p id="description"></p> 
-    <h1>Prayer Times</h1>
+    <h1>وقت الصلاة</h1>
   <div id="prayer-times"></div>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		 const locationPara = document.getElementById("location");
 		 const temperaturePara = document.getElementById("temperature");
@@ -37,9 +37,8 @@
         const prayerTimes = data.data.timings;
         const readable = data.data.date.readable ;
         const forday  = data.data.date.hijri.weekday.ar;
-        console.log(readable + forday);
-        const hijriday = data.data.date.hijri.day;
         
+        const hijriday = data.data.date.hijri.day;
         const hijrmonth = data.data.date.hijri.month.ar;
         const hijryear = data.data.date.hijri.year;
         const hijriDate = forday +' '+ hijriday +' '+ hijrmonth +' '+ hijryear;
