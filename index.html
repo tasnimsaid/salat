@@ -10,7 +10,7 @@
 	<p id="description"></p> 
     <h1>Prayer Times</h1>
   <div id="prayer-times"></div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
 	<script>
 		 const locationPara = document.getElementById("location");
 		 const temperaturePara = document.getElementById("temperature");
@@ -24,7 +24,7 @@
 				const longitude = position.coords.longitude;
 				locationPara.innerText = `Your location: ${latitude}, ${longitude}`;
 
-                const method = 4; // Use Umm Al-Qura method for calculation
+                const method = 5; // Use Umm Al-Qura method for calculation
 				// make a request to OpenWeatherMap API to get weather data for the current location
 				
                 const url = `http://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&${method}`;
@@ -88,6 +88,6 @@
 			locationPara.innerText = "Geolocation is not supported by this browser.";
 		}
 	</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
 </body>
 </html>
