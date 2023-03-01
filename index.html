@@ -4,21 +4,25 @@
 	<title>وقت الصلاة</title>
 </head>
  <body>
-	<h1>أوقات الصلاة</h1>
+	<h1>Weather App</h1>
 	<p id="location"></p>
-	
+	<p id="temperature"></p>
 	<p id="description"></p> 
-    
+    <h1>Prayer Times</h1>
   <div id="prayer-times"></div>
-  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		
+		 const locationPara = document.getElementById("location");
+		 const temperaturePara = document.getElementById("temperature");
+		 const descriptionPara = document.getElementById("description");
 
 		// check if geolocation is supported
 		if (navigator.geolocation) {
 			// watch the user's position and update the locationPara element
 			const watchId = navigator.geolocation.watchPosition(position => {
-				
+				const latitude = position.coords.latitude;
+				const longitude = position.coords.longitude;
+				locationPara.innerText = `Your location: ${latitude}, ${longitude}`;
 
                 const method = 4; // Use Umm Al-Qura method for calculation
 				// make a request to OpenWeatherMap API to get weather data for the current location
@@ -52,8 +56,13 @@
         const asr = timings.Asr;
         const maghrib = timings.Maghrib;
         const isha = timings.Isha;
+        const Imsak = timings.Imsak;
+        const Midnight = timings.Midnight;
 
         const prayerTimess = `
+        <p>Time Zone: ${timezone}</p>
+        <p>gregorianDate: ${gregorianDate}</p>
+
           <p>Date (Hijri): ${hijriDate}</p>
           <p>Fajr: ${fajr}</p>
           <p>Dhuhr: ${dhuhr}</p>
@@ -62,10 +71,13 @@
           <p>Isha: ${isha}</p>
           <p>Sunrise: ${sunrise}</p>
           <p>Sunset: ${sunset} </p>
-          <p>Time Zone: ${timezone}</p>
-          <p>gregorianDate: ${gregorianDate}</p>
           <p>latitude: ${latitude} N</p>
           <p>longitude: ${longitude} E</p>
+          <p>Imsak: ${Imsak} </p>
+
+          <p>Midnight: ${Midnight} </p>
+
+
         `;
         document.getElementById('prayer-times').innerHTML = prayerTimess;
     
@@ -73,8 +85,9 @@
       .catch(error => console.log(error));
 			});
 		} else {
-			console.log(your browser.§);
+			locationPara.innerText = "Geolocation is not supported by this browser.";
 		}
 	</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
