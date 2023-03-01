@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>وقت الصلاة</title>
-</head>
- <body>
-	<h1>Weather App</h1>
-	<p id="location"></p>
-	<p id="temperature"></p>
-	<p id="description"></p> 
-    <h1>Prayer Times</h1>
-  <div id="prayer-times"></div>
+  <head>
+    <title>Get Prayer Times using Geolocation API</title>
+  </head>
+  <body>
+    <h1>Your Geolocation API</h1>
+    <p>Time Zone : <span id="timezone"></span></p>
+
+    <p>Latitude: <span id="latitude"></span></p>
+    <p>Longitude: <span id="longitude"></span></p>
+    <p>Date (Hijri): <span id="hijriDate"></span></p>
+    <p>gregorianDate: <span id="gregorianDate"></span></p>
  
-	<script>
-		 const locationPara = document.getElementById("location");
-		 const temperaturePara = document.getElementById("temperature");
-		 const descriptionPara = document.getElementById("description");
+    <hr>
 
-		// check if geolocation is supported
-		if (navigator.geolocation) {
-			// watch the user's position and update the locationPara element
-			const watchId = navigator.geolocation.watchPosition(position => {
-				const latitude = position.coords.latitude;
-				const longitude = position.coords.longitude;
-				locationPara.innerText = `Your location: ${latitude}, ${longitude}`;
+    <h1>Prayer Times</h1>
+    <p>Sunrise Time: <span id="sunrise"></span></p>
+    <p>Sunset Time: <span id="sunset"></span></p>
+    <p>Fajr Prayer Time: <span id="fajr"></span></p>
+    <p>Dhuhr Prayer Time: <span id="dhuhr"></span></p>
+    <p>Asr Prayer Time: <span id="asr"></span></p>
+    <p>Maghrib Prayer Time: <span id="maghrib"></span></p>
+    <p>Isha Prayer Time: <span id="isha"></span></p>
 
-                const method = 5; // Use Umm Al-Qura method for calculation
-				// make a request to OpenWeatherMap API to get weather data for the current location
-				
-                const url = `http://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&${method}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
+    <p>Imsak Time: <span id="Imsak"></span></p>
+    <p>Midnight Time: <span id="Midnight"></span></p>
 
+
+    <script>
+      function getPrayerTimes(latitude, longitude) {
+        // ADHAN PRAYER TIMES API endpoint
+        const url = `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=4`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            
         const timings = data.data.timings;
         
         const prayerTimes = data.data.timings;
@@ -46,9 +50,8 @@
         
         
         const gregorianDate = data.data.date.gregorian.date;
-      
         const timezone = data.data.meta.timezone;
-
+      
         const sunrise = timings.Sunrise;
         const sunset = timings.Sunset;
         const fajr = timings.Fajr;
@@ -59,35 +62,41 @@
         const Imsak = timings.Imsak;
         const Midnight = timings.Midnight;
 
-        const prayerTimess = `
-        <p>Time Zone: ${timezone}</p>
-        <p>gregorianDate: ${gregorianDate}</p>
+            // Display prayer times on the web page
+            document.getElementById("fajr").innerHTML = fajr;
+            document.getElementById("dhuhr").innerHTML = dhuhr;
+            document.getElementById("asr").innerHTML = asr;
+            document.getElementById("maghrib").innerHTML = maghrib;
+            document.getElementById("isha").innerHTML = isha;
+            document.getElementById("hijriDate").innerHTML = hijriDate;
+            document.getElementById("gregorianDate").innerHTML = gregorianDate;
+            document.getElementById("Imsak").innerHTML = Imsak;
+            document.getElementById("Midnight").innerHTML = Midnight;
+            document.getElementById("timezone").innerHTML = timezone;
+            document.getElementById("sunrise").innerHTML = sunrise;
+            document.getElementById("sunset").innerHTML = sunset;
+            console.log(data);
 
-          <p>Date (Hijri): ${hijriDate}</p>
-          <p>Fajr: ${fajr}</p>
-          <p>Dhuhr: ${dhuhr}</p>
-          <p>Asr: ${asr}</p>
-          <p>Maghrib: ${maghrib}</p>
-          <p>Isha: ${isha}</p>
-          <p>Sunrise: ${sunrise}</p>
-          <p>Sunset: ${sunset} </p>
-          <p>latitude: ${latitude} N</p>
-          <p>longitude: ${longitude} E</p>
-          <p>Imsak: ${Imsak} </p>
+          });
+      }
 
-          <p>Midnight: ${Midnight} </p>
+      // Get user's current location using Geolocation API
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
 
+          // Display latitude and longitude on the web page
+          document.getElementById("latitude").innerHTML = latitude;
+          document.getElementById("longitude").innerHTML = longitude;
 
-        `;
-        document.getElementById('prayer-times').innerHTML = prayerTimess;
-    
-      })
-      .catch(error => console.log(error));
-			});
-		} else {
-			locationPara.innerText = "Geolocation is not supported by this browser.";
-		}
-	</script>
-  
-</body>
+          // Call getPrayerTimes function to get prayer times for the user's location
+          getPrayerTimes(latitude, longitude);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    </script>
+  </body>
 </html>
